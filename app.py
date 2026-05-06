@@ -11,8 +11,8 @@ def index():
     return render_template('index.html', todos=todos)
 
 #追加されたTodoをTodoリストに加える
-@app.route('/add', method=['POST'])
-def edit_todo(to_do):
+@app.route('/add', methods=['POST'])
+def add_todo():
     todo = request.form.get('todo')
     todos.append(todo)
     return redirect(url_for('index'))
@@ -31,8 +31,8 @@ def edit_todo(todo_id):
 def update_todo(todo_id):
     #変更されたTodoがある場合はTodoリストに追加する
     if 1 <= todo_id <= len(todos):
-        return render_template('edit.html', todos=todos[todo_id - 1], todo_id=todo_id)
-    else:
+        todo = request.form.get('todo')
+        todos[todo_id - 1] = todo
         return redirect(url_for('index'))
 
 #Todoが削除されたときの処理です
